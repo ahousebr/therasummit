@@ -173,6 +173,33 @@ function Guide() {
             </Card>
           </section>
 
+          <section id="summit" className="scroll-mt-20">
+            <SectionTitle kicker="O encontro" title="O Thera Summit" />
+            <p className="font-display text-xl leading-relaxed text-primary/90">
+              Grandes ideias ganham força quando conhecimento, experiência e diferentes perspectivas
+              se encontram.
+            </p>
+            <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted-foreground">
+              <p>
+                É com essa essência que nasce o Thera Summit, inspirado no conceito de summit: uma
+                reunião de alto nível que reúne especialistas e profissionais em torno de temas
+                relevantes, favorecendo a troca de conhecimento, o diálogo e novas conexões.
+              </p>
+              <p>
+                Em sua primeira edição, o Thera Summit reúne médicos de diferentes especialidades em
+                um ambiente pensado para compartilhar experiências, ampliar perspectivas e aproximar
+                ciência, inovação e cuidado.
+              </p>
+              <p>
+                O 1º Thera Summit marca o início de um projeto da Therapeutica Pharmacia, criado com
+                o propósito de transformar conhecimento em novas possibilidades de cuidado. Um
+                encontro que fortalece conexões, estimula novas perspectivas e, a cada edição,
+                constrói caminhos para uma saúde cada vez mais individualizada, integrada e centrada
+                nas necessidades de cada paciente.
+              </p>
+            </div>
+          </section>
+
           <section id="biodiversite" className="scroll-mt-20">
             <SectionTitle kicker="Marca parceira" title="Sobre a Biodiversité" />
             <p className="text-sm leading-relaxed text-muted-foreground">
@@ -183,10 +210,47 @@ function Guide() {
 
           <section id="therapeutica" className="scroll-mt-20">
             <SectionTitle kicker="Marca parceira" title="Sobre a Therapeutica" />
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              [Descrição institucional da Therapeutica — atuação, portfólio e diferenciais clínicos.
-              Substituir por texto oficial.]
-            </p>
+            <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
+              <p>
+                Há quase três décadas, a Therapeutica Pharmacia nasceu em Sorriso a partir do
+                propósito da farmacêutica Andrea Andreolla de Borges, ao lado de seu esposo, Silvio
+                Borges, de construir uma farmácia onde o cuidado individualizado estivesse no centro
+                de cada escolha.
+              </p>
+              <p>
+                Desde 1997, crescemos junto com o Mato Grosso, ampliamos nossa presença e, hoje,
+                estamos em Sorriso, Sinop e Lucas do Rio Verde, mantendo a essência que deu origem à
+                Therapeutica: entender que cada pessoa é única e que o cuidado também deve ser.
+              </p>
+              <p>
+                Ao longo dessa trajetória, construímos uma atuação pautada pela qualidade,
+                conhecimento e personalização, aproximando a ciência magistral das necessidades
+                individuais de cada paciente.
+              </p>
+              <p className="font-display text-xl leading-relaxed text-primary/90">
+                Personalizamos cuidados para transformar vidas.
+              </p>
+              <p>
+                Um propósito sustentado por valores que fazem parte da nossa forma de cuidar e de
+                construir relações: responsabilidade e comprometimento, gratidão, transparência,
+                cuidado e servir, respeito e empatia e sustentabilidade.
+              </p>
+              <p>
+                Mais do que manipular fórmulas, acreditamos na construção de relações. Por isso,
+                buscamos estar próximos dos profissionais de saúde, promovendo troca de conhecimento,
+                atualização e parceria, para que prescritor e farmácia possam caminhar juntos na
+                busca pelas melhores possibilidades de cuidado.
+              </p>
+              <p>
+                É dessa vontade de evoluir, compartilhar conhecimento e estar cada vez mais próximos
+                que também nasce o Thera Summit.
+              </p>
+              <p>
+                Seguimos olhando para o futuro com o propósito que nos acompanha desde o início e com
+                a visão de ser referência nacional em manipulação personalizada, sem perder aquilo
+                que faz parte da nossa essência: cuidar de cada pessoa de forma única.
+              </p>
+            </div>
           </section>
 
           <section id="instagram" className="scroll-mt-20">
