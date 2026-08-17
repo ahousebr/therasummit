@@ -67,11 +67,11 @@ function Guide() {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
       <div className="mx-auto max-w-md">
-        <section className="relative">
+        <section className="px-8 pb-10 pt-14">
           <img
             src={logoAsset.url}
             alt="Thera Summit"
-            className="w-full"
+            className="mx-auto w-full max-w-xs"
             loading="eager"
           />
         </section>
