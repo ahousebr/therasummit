@@ -93,7 +93,10 @@ function Guide() {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
       <div className="mx-auto max-w-md">
-        <header className="relative px-8 pb-5 pt-14">
+        <header
+          className="relative w-screen px-8 pb-5 pt-14"
+          style={{ marginLeft: "calc(50% - 50vw)" }}
+        >
           <img
             src={`${import.meta.env.BASE_URL}thera-logo.png`}
             alt="Thera Summit"
@@ -109,9 +112,9 @@ function Guide() {
           <button type="button" onClick={() => goTo(activeIndex - 1)} disabled={activeIndex === 0} aria-label="Seção anterior" className="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/95 text-accent transition-opacity hover:border-accent disabled:opacity-25">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
           </button>
-          <ul className="flex w-full justify-center gap-2 overflow-x-auto px-14 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <ul className="flex w-max min-w-full snap-x snap-mandatory justify-start gap-2 overflow-x-auto overscroll-x-contain px-14 py-3 touch-pan-x [scrollbar-width:none] md:w-full md:justify-center [&::-webkit-scrollbar]:hidden">
             {nav.map((item) => (
-              <li key={item.id} className="shrink-0">
+              <li key={item.id} className="shrink-0 snap-start">
                 <a
                   href={`#${item.id}`}
                   className="block rounded-full border border-border px-3 py-1.5 text-[0.7rem] uppercase tracking-wider text-muted-foreground transition-colors hover:border-accent hover:text-primary"
