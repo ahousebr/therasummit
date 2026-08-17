@@ -1,3 +1,4 @@
+import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import logoAsset from "@/assets/thera-logo.png.asset.json";
 
@@ -34,13 +35,10 @@ const nav = [
 ];
 
 const agenda = [
-  { time: "08h30", title: "Credenciamento & Welcome Coffee", detail: "Recepção e entrega dos materiais." },
-  { time: "09h30", title: "Abertura oficial", detail: "Boas-vindas e apresentação do Summit." },
-  { time: "10h00", title: "Palestra principal", detail: "Ciência, pele e biodiversidade." },
-  { time: "12h30", title: "Almoço", detail: "Menu sazonal servido no salão principal." },
-  { time: "14h00", title: "Workshop prático", detail: "Protocolos aplicados em grupos." },
-  { time: "16h30", title: "Roda de conversa", detail: "Perguntas abertas com os especialistas." },
-  { time: "18h00", title: "Encerramento & networking", detail: "Brinde de encerramento." },
+  { time: "19h00", title: "Welcome Drinks", detail: "Recepção e credenciamento dos convidados." },
+  { time: "19h45", title: "Abertura oficial", detail: "Boas-vindas e apresentação do Summit." },
+  { time: "20h00", title: "Palestra com Dr. Fabrício Brito", detail: "Ciência, performance e longevidade." },
+  { time: "21h30", title: "Jantar", detail: "Jantar de encerramento e networking." },
 ];
 
 function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
@@ -64,17 +62,73 @@ function Card({ children }: { children: React.ReactNode }) {
 }
 
 function Guide() {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const idx = nav.findIndex((n) => n.id === id);
+            if (idx !== -1) setActiveIndex(idx);
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+    );
+    nav.forEach((n) => {
+      const el = document.getElementById(n.id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const goTo = (index: number) => {
+    const clamped = Math.max(0, Math.min(nav.length - 1, index));
+    const el = document.getElementById(nav[clamped].id);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActiveIndex(clamped);
+  };
+
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
       <div className="mx-auto max-w-md">
-        <section className="px-8 pb-10 pt-14">
+        <header className="relative px-8 pb-10 pt-14">
           <img
             src={logoAsset.url}
             alt="Thera Summit"
             className="mx-auto w-full max-w-xs"
             loading="eager"
           />
-        </section>
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-between px-5 pb-3">
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex - 1)}
+              disabled={activeIndex === 0}
+              aria-label="Seção anterior"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/80 text-accent transition-opacity hover:border-accent disabled:opacity-25"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <p className="font-sans text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
+              {String(activeIndex + 1).padStart(2, "0")} / {String(nav.length).padStart(2, "0")}
+            </p>
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex + 1)}
+              disabled={activeIndex === nav.length - 1}
+              aria-label="Próxima seção"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/80 text-accent transition-opacity hover:border-accent disabled:opacity-25"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+        </header>
 
         <nav className="sticky top-0 z-10 border-y border-border bg-background/95 backdrop-blur">
           <ul className="flex gap-2 overflow-x-auto px-4 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -98,9 +152,9 @@ function Guide() {
               É uma alegria receber você no Thera Summit.
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Preparamos um dia dedicado ao encontro entre ciência, natureza e cuidado. Este guia
+              Preparamos um encontro dedicado a ciência, natureza e cuidado. Este guia
               reúne tudo o que você precisa: horários, localização e as histórias por trás das marcas
-              que tornam este encontro possível. Sinta-se em casa.
+              que tornam esta noite possível. Sinta-se em casa.
             </p>
           </section>
 
@@ -131,9 +185,9 @@ function Guide() {
           <section id="como-chegar" className="scroll-mt-20">
             <SectionTitle kicker="Localização" title="Como chegar" />
             <Card>
-              <p className="font-display text-xl text-primary">[NOME DO LOCAL — substituir]</p>
+              <p className="font-display text-xl text-primary">Todeschini Sorriso</p>
               <p className="mt-2 text-sm text-muted-foreground">
-                [Endereço completo, bairro, cidade — substituir]
+                Av. Blumenau Sul, 3534 — Bom Jesus, Sorriso — MT, 78896-147
               </p>
               <div className="mt-5 space-y-3 text-xs leading-relaxed text-muted-foreground">
                 <p>
@@ -144,12 +198,9 @@ function Guide() {
                   <span className="text-accent">Transporte por app ·</span> peça o desembarque na
                   portaria.
                 </p>
-                <p>
-                  <span className="text-accent">Metrô ·</span> [estação mais próxima — substituir].
-                </p>
               </div>
               <a
-                href="https://maps.google.com"
+                href="https://www.google.com/maps/search/?api=1&query=Todeschini+Sorriso+Av.+Blumenau+Sul+3534+Bom+Jesus+Sorriso+MT"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-6 block rounded-full bg-primary py-3 text-center text-xs font-medium uppercase tracking-wider text-primary-foreground"
@@ -162,14 +213,26 @@ function Guide() {
           <section id="palestrante" className="scroll-mt-20">
             <SectionTitle kicker="Convidado" title="Sobre o palestrante" />
             <Card>
-              <p className="font-display text-2xl text-primary">[Nome do palestrante]</p>
+              <p className="font-display text-2xl text-primary">Dr. Fabrício Macedo Brito</p>
               <p className="mt-1 text-[0.7rem] uppercase tracking-wider text-accent">
-                [Titulação / especialidade]
+                CRM-SP 178057
               </p>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                [Mini biografia do palestrante: formação, trajetória e principais contribuições —
-                substituir por texto oficial.]
-              </p>
+              <div className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground">
+                <p>
+                  Médico, enfermeiro e palestrante com atuação em Medicina Estética Integrativa,
+                  performance e tecnologias avançadas. Integra conhecimentos em emagrecimento,
+                  hipertrofia, reposição hormonal, peptídeos e healthspan, conectando saúde,
+                  longevidade e estética.
+                </p>
+                <p>
+                  Na estética avançada, desenvolve tratamentos faciais, capilares e corporais, com
+                  terapias autólogas e sintéticas e tecnologias como ultrassom, laser e endolaser.
+                </p>
+                <p>
+                  Com experiência em eventos nacionais e internacionais, já palestrou em congressos
+                  como AMWC, CIOSP e ABRAN.
+                </p>
+              </div>
             </Card>
           </section>
 
@@ -202,17 +265,33 @@ function Guide() {
 
           <section id="biodiversite" className="scroll-mt-20">
             <SectionTitle kicker="Marca parceira" title="Sobre a Biodiversité" />
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              [Descrição institucional da Biodiversité — propósito, origem dos ativos e filosofia de
-              formulação. Substituir por texto oficial.]
-            </p>
+            <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
+              <p>
+                A Biodiversité nasceu com a grande missão de trazer ao mercado cosmético mundial
+                ativos premium para formulações manipuladas pautadas em inovação científica,
+                tecnologia e respeito ao meio ambiente. Nossos valores são a ética, a ciência e a
+                responsabilidade social e ambiental.
+              </p>
+              <p>
+                Fundada em 2009, a Biodiversité começou exportando insumos farmacêuticos naturais
+                para o exterior e, através de sua consolidação no mercado internacional, passou a ter
+                acesso a tecnologias inovadoras na Europa e Ásia. Desde então se tornou referência em
+                inovação tecnológica e sustentabilidade de princípios ativos e matérias primas
+                premium, naturais, hipoalergênicas e de alta eficácia.
+              </p>
+              <p>
+                Há mais de dez anos o nosso propósito é pautado em entregar as melhores soluções
+                médicas e nutricionais para todos os pacientes. Levamos saúde, autoestima e bem-estar
+                através do estudo, desenvolvimento, fabricação e distribuição de ativos premium.
+              </p>
+            </div>
           </section>
 
           <section id="therapeutica" className="scroll-mt-20">
             <SectionTitle kicker="Marca parceira" title="Sobre a Therapeutica" />
             <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p>
-                Há quase três décadas, a Therapeutica Pharmacia nasceu em Sorriso a partir do
+                Há quase três décadas, a Therapeutica Pharmaria nasceu em Sorriso a partir do
                 propósito da farmacêutica Andrea Andreolla de Borges, ao lado de seu esposo, Silvio
                 Borges, de construir uma farmácia onde o cuidado individualizado estivesse no centro
                 de cada escolha.
@@ -260,12 +339,12 @@ function Guide() {
                 Acompanhe os bastidores e conteúdos do Summit.
               </p>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/therapeuticamt/"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-5 inline-block rounded-full border border-accent px-8 py-3 font-display text-lg text-primary"
               >
-                @[perfil]
+                @therapeuticamt
               </a>
             </div>
           </section>
