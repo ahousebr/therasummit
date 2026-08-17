@@ -28,24 +28,24 @@ const nav = [
   { id: "programacao", label: "Programação" },
   { id: "como-chegar", label: "Como chegar" },
   { id: "palestrante", label: "Palestrante" },
-  { id: "summit", label: "O Thera Summit" },
   { id: "biodiversite", label: "Biodiversité" },
   { id: "therapeutica", label: "Therapeutica" },
   { id: "instagram", label: "Instagram" },
 ];
 
 const agenda = [
-  { time: "19h00", title: "Welcome Drinks", detail: "Recepção e credenciamento dos convidados." },
-  { time: "19h45", title: "Abertura oficial", detail: "Boas-vindas e apresentação do Summit." },
-  { time: "20h00", title: "Palestra com Dr. Fabrício Brito", detail: "Ciência, performance e longevidade." },
-  { time: "21h30", title: "Jantar", detail: "Jantar de encerramento e networking." },
+  { time: "19h00", title: "Welcome Drinks" },
+  { time: "19h45", title: "Abertura oficial" },
+  { time: "20h00", title: "Palestra com Dr. Fabrício Brito" },
+  { time: "21h30", title: "Jantar" },
+  { time: "22h30", title: "Encerramento" },
 ];
 
-function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
+function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
   return (
     <header className="mb-6 text-center">
-      <p className="font-sans text-[0.65rem] uppercase tracking-wider text-accent">{kicker}</p>
-      <h2 className="mt-2 font-display text-3xl font-light text-primary">{title}</h2>
+      {kicker && <p className="font-sans text-[0.65rem] uppercase tracking-wider text-accent">{kicker}</p>}
+      <h2 className="font-display text-3xl font-light text-primary">{title}</h2>
       <div className="divider-ornament mt-4">
         <span className="text-accent">✦</span>
       </div>
@@ -94,44 +94,23 @@ function Guide() {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
       <div className="mx-auto max-w-md">
-        <header className="relative px-8 pb-10 pt-14">
+        <header className="relative px-8 pb-5 pt-14">
           <img
             src={logoAsset.url}
             alt="Thera Summit"
             className="mx-auto w-full max-w-xs"
             loading="eager"
           />
-          <div className="absolute inset-x-0 bottom-0 flex items-center justify-between px-5 pb-3">
-            <button
-              type="button"
-              onClick={() => goTo(activeIndex - 1)}
-              disabled={activeIndex === 0}
-              aria-label="Seção anterior"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/80 text-accent transition-opacity hover:border-accent disabled:opacity-25"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m15 18-6-6 6-6" />
-              </svg>
-            </button>
-            <p className="font-sans text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(nav.length).padStart(2, "0")}
-            </p>
-            <button
-              type="button"
-              onClick={() => goTo(activeIndex + 1)}
-              disabled={activeIndex === nav.length - 1}
-              aria-label="Próxima seção"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/80 text-accent transition-opacity hover:border-accent disabled:opacity-25"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-            </button>
-          </div>
         </header>
 
-        <nav className="sticky top-0 z-10 border-y border-border bg-background/95 backdrop-blur">
-          <ul className="flex gap-2 overflow-x-auto px-4 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <nav
+          className="sticky top-0 z-10 w-screen border-y border-border bg-background/95 backdrop-blur"
+          style={{ marginLeft: "calc(50% - 50vw)" }}
+        >
+          <button type="button" onClick={() => goTo(activeIndex - 1)} disabled={activeIndex === 0} aria-label="Seção anterior" className="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/95 text-accent transition-opacity hover:border-accent disabled:opacity-25">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+          </button>
+          <ul className="flex w-full justify-center gap-2 overflow-x-auto px-14 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {nav.map((item) => (
               <li key={item.id} className="shrink-0">
                 <a
@@ -143,23 +122,32 @@ function Guide() {
               </li>
             ))}
           </ul>
+          <button type="button" onClick={() => goTo(activeIndex + 1)} disabled={activeIndex === nav.length - 1} aria-label="Próxima seção" className="absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/95 text-accent transition-opacity hover:border-accent disabled:opacity-25">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+          </button>
         </nav>
 
         <main className="space-y-14 px-5 py-12">
-          <section id="boas-vindas" className="scroll-mt-20">
+          <section id="boas-vindas" className="scroll-mt-20 text-justify [text-align-last:center]">
             <SectionTitle kicker="Guia do evento" title="Boas-vindas" />
             <p className="font-display text-xl leading-relaxed text-primary/90">
-              É uma alegria receber você no Thera Summit.
+              Grandes ideias ganham força quando conhecimento, experiência e diferentes perspectivas se encontram.
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Preparamos um encontro dedicado a ciência, natureza e cuidado. Este guia
-              reúne tudo o que você precisa: horários, localização e as histórias por trás das marcas
-              que tornam esta noite possível. Sinta-se em casa.
-            </p>
+            <div className="mt-5 space-y-5 text-sm leading-relaxed text-muted-foreground">
+              <p>
+                É com essa essência que nasce o Thera Summit, inspirado no conceito de summit: uma reunião de alto nível que reúne especialistas e profissionais em torno de temas relevantes, favorecendo a troca de conhecimento, o diálogo e novas conexões.
+              </p>
+              <p>
+                Em sua primeira edição, o Thera Summit reúne médicos de diferentes especialidades em um ambiente pensado para compartilhar experiências, ampliar perspectivas e aproximar ciência, inovação e cuidado.
+              </p>
+              <p>
+                O 1º Thera Summit marca o início de um projeto da Therapeutica Pharmacia, criado com o propósito de transformar conhecimento em novas possibilidades de cuidado. Um encontro que fortalece conexões, estimula novas perspectivas e, a cada edição, constrói caminhos para uma saúde cada vez mais individualizada, integrada e centrada nas necessidades de cada paciente.
+              </p>
+            </div>
           </section>
 
           <section id="programacao" className="scroll-mt-20">
-            <SectionTitle kicker="Agenda" title="Programação" />
+            <SectionTitle title="Programação" />
             <ol className="space-y-3">
               {agenda.map((slot) => (
                 <li key={slot.time}>
@@ -168,18 +156,12 @@ function Guide() {
                       <span className="shrink-0 font-display text-lg text-accent">{slot.time}</span>
                       <div className="min-w-0">
                         <h3 className="text-sm font-medium text-primary">{slot.title}</h3>
-                        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                          {slot.detail}
-                        </p>
                       </div>
                     </div>
                   </Card>
                 </li>
               ))}
             </ol>
-            <p className="mt-4 text-center text-[0.7rem] uppercase tracking-wider text-muted-foreground">
-              Programação sujeita a ajustes
-            </p>
           </section>
 
           <section id="como-chegar" className="scroll-mt-20">
@@ -189,16 +171,6 @@ function Guide() {
               <p className="mt-2 text-sm text-muted-foreground">
                 Av. Blumenau Sul, 3534 — Bom Jesus, Sorriso — MT, 78896-147
               </p>
-              <div className="mt-5 space-y-3 text-xs leading-relaxed text-muted-foreground">
-                <p>
-                  <span className="text-accent">Carro ·</span> estacionamento com serviço de valet na
-                  entrada principal.
-                </p>
-                <p>
-                  <span className="text-accent">Transporte por app ·</span> peça o desembarque na
-                  portaria.
-                </p>
-              </div>
               <a
                 href="https://www.google.com/maps/search/?api=1&query=Todeschini+Sorriso+Av.+Blumenau+Sul+3534+Bom+Jesus+Sorriso+MT"
                 target="_blank"
@@ -210,7 +182,7 @@ function Guide() {
             </Card>
           </section>
 
-          <section id="palestrante" className="scroll-mt-20">
+          <section id="palestrante" className="scroll-mt-20 text-justify [text-align-last:center]">
             <SectionTitle kicker="Convidado" title="Sobre o palestrante" />
             <Card>
               <p className="font-display text-2xl text-primary">Dr. Fabrício Macedo Brito</p>
@@ -236,34 +208,7 @@ function Guide() {
             </Card>
           </section>
 
-          <section id="summit" className="scroll-mt-20">
-            <SectionTitle kicker="O encontro" title="O Thera Summit" />
-            <p className="font-display text-xl leading-relaxed text-primary/90">
-              Grandes ideias ganham força quando conhecimento, experiência e diferentes perspectivas
-              se encontram.
-            </p>
-            <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted-foreground">
-              <p>
-                É com essa essência que nasce o Thera Summit, inspirado no conceito de summit: uma
-                reunião de alto nível que reúne especialistas e profissionais em torno de temas
-                relevantes, favorecendo a troca de conhecimento, o diálogo e novas conexões.
-              </p>
-              <p>
-                Em sua primeira edição, o Thera Summit reúne médicos de diferentes especialidades em
-                um ambiente pensado para compartilhar experiências, ampliar perspectivas e aproximar
-                ciência, inovação e cuidado.
-              </p>
-              <p>
-                O 1º Thera Summit marca o início de um projeto da Therapeutica Pharmacia, criado com
-                o propósito de transformar conhecimento em novas possibilidades de cuidado. Um
-                encontro que fortalece conexões, estimula novas perspectivas e, a cada edição,
-                constrói caminhos para uma saúde cada vez mais individualizada, integrada e centrada
-                nas necessidades de cada paciente.
-              </p>
-            </div>
-          </section>
-
-          <section id="biodiversite" className="scroll-mt-20">
+          <section id="biodiversite" className="scroll-mt-20 text-justify [text-align-last:center]">
             <SectionTitle kicker="Marca parceira" title="Sobre a Biodiversité" />
             <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p>
@@ -287,7 +232,7 @@ function Guide() {
             </div>
           </section>
 
-          <section id="therapeutica" className="scroll-mt-20">
+          <section id="therapeutica" className="scroll-mt-20 text-justify [text-align-last:center]">
             <SectionTitle kicker="Marca parceira" title="Sobre a Therapeutica" />
             <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p>
@@ -332,11 +277,14 @@ function Guide() {
             </div>
           </section>
 
-          <section id="instagram" className="scroll-mt-20">
+          <section id="instagram" className="scroll-mt-20 text-justify [text-align-last:center]">
             <SectionTitle kicker="Continue conosco" title="Nosso Instagram" />
             <div className="text-center">
               <p className="text-sm text-muted-foreground">
                 Acompanhe os bastidores e conteúdos do Summit.
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Você é parte da nossa história! Tire uma foto e marque a gente na sua publicação.
               </p>
               <a
                 href="https://www.instagram.com/therapeuticamt/"
