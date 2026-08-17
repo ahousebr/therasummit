@@ -1,6 +1,5 @@
 import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import logoAsset from "@/assets/thera-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -96,7 +95,7 @@ function Guide() {
       <div className="mx-auto max-w-md">
         <header className="relative px-8 pb-5 pt-14">
           <img
-            src={logoAsset.url}
+            src={`${import.meta.env.BASE_URL}thera-logo.png`}
             alt="Thera Summit"
             className="mx-auto w-full max-w-xs"
             loading="eager"
