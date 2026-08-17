@@ -178,7 +178,7 @@ function Guide() {
                 navWasDraggedRef.current = false;
               }
             }}
-            className="flex w-max min-w-full cursor-grab snap-x snap-mandatory justify-start gap-2 overflow-x-auto overscroll-x-contain px-14 py-3 touch-pan-x select-none active:cursor-grabbing [scrollbar-width:none] [-webkit-overflow-scrolling:touch] md:w-full md:justify-center [&::-webkit-scrollbar]:hidden"
+            className="flex w-full max-w-full cursor-grab snap-x snap-mandatory justify-start gap-2 overflow-x-auto overscroll-x-contain px-14 py-3 touch-pan-x select-none active:cursor-grabbing [scrollbar-width:none] [-webkit-overflow-scrolling:touch] md:justify-center [&::-webkit-scrollbar]:hidden"
           >
             {nav.map((item) => (
               <li key={item.id} className="shrink-0 snap-start">
