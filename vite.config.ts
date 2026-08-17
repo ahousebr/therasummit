@@ -15,9 +15,11 @@ if (!process.env.LOVABLE_PREVIEW_HOST) {
 }
 
 export default defineConfig({
+  nitro: false,
+  vite: {
+    base: process.env.GITHUB_PAGES === "true" ? "/therasummit/" : "/",
+  },
   tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
-    server: { entry: "server" },
+    spa: { enabled: true },
   },
 });

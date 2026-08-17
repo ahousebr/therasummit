@@ -166,10 +166,14 @@ function Guide() {
 
           <section id="como-chegar" className="scroll-mt-20">
             <SectionTitle kicker="Localização" title="Como chegar" />
+            <div className="space-y-3">
             <Card>
               <p className="font-display text-xl text-primary">Todeschini Sorriso</p>
+              <p className="mt-2 text-sm text-muted-foreground">18/08</p>
               <p className="mt-2 text-sm text-muted-foreground">
-                Av. Blumenau Sul, 3534 — Bom Jesus, Sorriso — MT, 78896-147
+                Av. Blumenau Sul, 3534 — Bom Jesus, Sorriso — MT,
+                <br />
+                78896-147
               </p>
               <a
                 href="https://www.google.com/maps/search/?api=1&query=Todeschini+Sorriso+Av.+Blumenau+Sul+3534+Bom+Jesus+Sorriso+MT"
@@ -180,6 +184,22 @@ function Guide() {
                 Abrir no mapa
               </a>
             </Card>
+            <Card>
+              <p className="font-display text-xl text-primary">Todeschini Sinop</p>
+              <p className="mt-2 text-sm text-muted-foreground">19/08</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Av. das Embaúbas, 2724 - Jardim Maringá, Sinop - MT, 78556-271
+              </p>
+              <a
+                href="https://maps.app.goo.gl/bXJ8QL7PdyyHsoEM8"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-6 block rounded-full bg-primary py-3 text-center text-xs font-medium uppercase tracking-wider text-primary-foreground"
+              >
+                Abrir no mapa
+              </a>
+            </Card>
+            </div>
           </section>
 
           <section id="palestrante" className="scroll-mt-20 text-justify [text-align-last:center]">

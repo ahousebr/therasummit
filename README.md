@@ -32,3 +32,12 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Deploy
+
+Cada push para a branch `main` dispara o workflow de deploy em
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). O projeto é
+publicado no GitHub Pages como um site estático.
+
+Antes do primeiro deploy, no repositório, vá em **Settings → Pages** e escolha
+**GitHub Actions** como fonte de publicação. Não são necessários secrets.
