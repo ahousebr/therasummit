@@ -44,10 +44,12 @@ function SectionTitle({
   kicker,
   title,
   inverted = false,
+  titleImageSrc,
 }: {
   kicker?: string;
   title: string;
   inverted?: boolean;
+  titleImageSrc?: string;
 }) {
   return (
     <header className="mb-6 text-center">
@@ -60,9 +62,13 @@ function SectionTitle({
           {kicker}
         </p>
       )}
-      <h2 className={`font-display text-3xl font-light ${inverted ? "text-primary-foreground" : "text-primary"}`}>
-        {title}
-      </h2>
+      {titleImageSrc ? (
+        <img src={titleImageSrc} alt={title} className="mx-auto mt-1 w-full max-w-72" />
+      ) : (
+        <h2 className={`font-display text-3xl font-light ${inverted ? "text-primary-foreground" : "text-primary"}`}>
+          {title}
+        </h2>
+      )}
       <div
         className={`divider-ornament mt-4 ${
           inverted ? "[--accent:var(--primary-foreground)]" : ""
@@ -285,7 +291,7 @@ function Guide() {
 
           <section
             id="como-chegar"
-            className="section-transition-card w-screen scroll-mt-20 bg-card"
+            className="w-screen scroll-mt-20 bg-card"
             style={{ marginLeft: "calc(50% - 50vw)" }}
           >
             <div className="mx-auto max-w-md px-5 py-10">
@@ -355,11 +361,16 @@ function Guide() {
 
           <section
             id="biodiversite"
-            className="section-transition-primary w-screen scroll-mt-20 bg-primary text-justify text-primary-foreground [text-align-last:center]"
+            className="w-screen scroll-mt-20 bg-primary text-justify text-primary-foreground [text-align-last:center]"
             style={{ marginLeft: "calc(50% - 50vw)" }}
           >
             <div className="mx-auto max-w-md px-5 py-10">
-            <SectionTitle kicker="Marca parceira" title="Sobre a Biodiversité" inverted />
+            <SectionTitle
+              kicker="Marca parceira"
+              title="Sobre a Biodiversité"
+              titleImageSrc={`${import.meta.env.BASE_URL}biodiversite.png`}
+              inverted
+            />
             <div className="space-y-4 text-sm leading-relaxed text-primary-foreground">
               <p>
                 A Biodiversité nasceu com a grande missão de trazer ao mercado cosmético mundial
@@ -385,7 +396,10 @@ function Guide() {
           </section>
 
           <section id="therapeutica" className="scroll-mt-20 text-justify [text-align-last:center]">
-            <SectionTitle kicker="Marca parceira" title="Sobre a Therapeutica" />
+            <SectionTitle
+              title="Sobre a Therapeutica"
+              titleImageSrc={`${import.meta.env.BASE_URL}therapeutica.png`}
+            />
             <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p>
                 Há quase três décadas, a Therapeutica Pharmaria nasceu em Sorriso a partir do
@@ -431,7 +445,7 @@ function Guide() {
 
           <section
             id="instagram"
-            className="section-transition-primary w-screen scroll-mt-20 bg-primary text-justify text-primary-foreground [text-align-last:center]"
+            className="w-screen scroll-mt-20 bg-primary text-justify text-primary-foreground [text-align-last:center]"
             style={{ marginLeft: "calc(50% - 50vw)" }}
           >
             <div className="mx-auto max-w-md px-5 py-10">
