@@ -128,7 +128,7 @@ function Guide() {
   };
 
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground">
+    <div className="min-h-screen overflow-x-clip bg-background font-sans text-foreground">
       <div className="mx-auto max-w-md">
         <header
           className="relative w-screen px-8 pb-5 pt-14"
