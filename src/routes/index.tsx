@@ -27,6 +27,7 @@ const nav = [
   { id: "programacao", label: "Programação" },
   { id: "como-chegar", label: "Como chegar" },
   { id: "palestrante", label: "Palestrante" },
+  { id: "summit", label: "O Thera Summit" },
   { id: "biodiversite", label: "Biodiversité" },
   { id: "therapeutica", label: "Therapeutica" },
   { id: "instagram", label: "Instagram" },
