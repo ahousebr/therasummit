@@ -43,7 +43,9 @@ const agenda = [
 function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
   return (
     <header className="mb-6 text-center">
-      {kicker && <p className="font-sans text-[0.65rem] uppercase tracking-wider text-accent">{kicker}</p>}
+      {kicker && (
+        <p className="font-sans text-[0.65rem] uppercase tracking-wider text-accent">{kicker}</p>
+      )}
       <h2 className="font-display text-3xl font-light text-primary">{title}</h2>
       <div className="divider-ornament mt-4">
         <span className="text-accent">✦</span>
@@ -63,6 +65,10 @@ function Card({ children }: { children: React.ReactNode }) {
 function Guide() {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const navScrollRef = React.useRef<HTMLUListElement>(null);
+  const navDragRef = React.useRef<{ pointerId: number; startX: number; scrollLeft: number } | null>(
+    null,
+  );
+  const navWasDraggedRef = React.useRef(false);
 
   React.useEffect(() => {
     navScrollRef.current?.scrollTo({ left: 0 });
@@ -95,6 +101,32 @@ function Guide() {
     setActiveIndex(clamped);
   };
 
+  const startNavDrag = (event: React.PointerEvent<HTMLUListElement>) => {
+    navDragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      scrollLeft: event.currentTarget.scrollLeft,
+    };
+    navWasDraggedRef.current = false;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const dragNavigation = (event: React.PointerEvent<HTMLUListElement>) => {
+    const drag = navDragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    const distance = event.clientX - drag.startX;
+    if (Math.abs(distance) > 4) navWasDraggedRef.current = true;
+    event.currentTarget.scrollLeft = drag.scrollLeft - distance;
+  };
+
+  const stopNavDrag = (event: React.PointerEvent<HTMLUListElement>) => {
+    if (navDragRef.current?.pointerId === event.pointerId) {
+      navDragRef.current = null;
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
       <div className="mx-auto max-w-md">
@@ -114,10 +146,40 @@ function Guide() {
           className="sticky top-0 z-10 w-screen border-y border-border bg-background/95 backdrop-blur"
           style={{ marginLeft: "calc(50% - 50vw)" }}
         >
-          <button type="button" onClick={() => goTo(activeIndex - 1)} disabled={activeIndex === 0} aria-label="Seção anterior" className="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/95 text-accent transition-opacity hover:border-accent disabled:opacity-25">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+          <button
+            type="button"
+            onClick={() => goTo(activeIndex - 1)}
+            disabled={activeIndex === 0}
+            aria-label="Seção anterior"
+            className="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/95 text-accent transition-opacity hover:border-accent disabled:opacity-25"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
           </button>
-          <ul ref={navScrollRef} className="flex w-max min-w-full snap-x snap-mandatory justify-start gap-2 overflow-x-auto overscroll-x-contain px-14 py-3 touch-pan-x [scrollbar-width:none] md:w-full md:justify-center [&::-webkit-scrollbar]:hidden">
+          <ul
+            ref={navScrollRef}
+            onPointerDown={startNavDrag}
+            onPointerMove={dragNavigation}
+            onPointerUp={stopNavDrag}
+            onPointerCancel={stopNavDrag}
+            onClickCapture={(event) => {
+              if (navWasDraggedRef.current) {
+                event.preventDefault();
+                navWasDraggedRef.current = false;
+              }
+            }}
+            className="flex w-max min-w-full cursor-grab snap-x snap-mandatory justify-start gap-2 overflow-x-auto overscroll-x-contain px-14 py-3 touch-pan-x select-none active:cursor-grabbing [scrollbar-width:none] [-webkit-overflow-scrolling:touch] md:w-full md:justify-center [&::-webkit-scrollbar]:hidden"
+          >
             {nav.map((item) => (
               <li key={item.id} className="shrink-0 snap-start">
                 <a
@@ -129,8 +191,25 @@ function Guide() {
               </li>
             ))}
           </ul>
-          <button type="button" onClick={() => goTo(activeIndex + 1)} disabled={activeIndex === nav.length - 1} aria-label="Próxima seção" className="absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/95 text-accent transition-opacity hover:border-accent disabled:opacity-25">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+          <button
+            type="button"
+            onClick={() => goTo(activeIndex + 1)}
+            disabled={activeIndex === nav.length - 1}
+            aria-label="Próxima seção"
+            className="absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/95 text-accent transition-opacity hover:border-accent disabled:opacity-25"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
           </button>
         </nav>
 
@@ -138,17 +217,26 @@ function Guide() {
           <section id="boas-vindas" className="scroll-mt-20 text-justify [text-align-last:center]">
             <SectionTitle kicker="Guia do evento" title="Boas-vindas" />
             <p className="font-display text-xl leading-relaxed text-primary/90">
-              Grandes ideias ganham força quando conhecimento, experiência e diferentes perspectivas se encontram.
+              Grandes ideias ganham força quando conhecimento, experiência e diferentes perspectivas
+              se encontram.
             </p>
             <div className="mt-5 space-y-5 text-sm leading-relaxed text-muted-foreground">
               <p>
-                É com essa essência que nasce o Thera Summit, inspirado no conceito de summit: uma reunião de alto nível que reúne especialistas e profissionais em torno de temas relevantes, favorecendo a troca de conhecimento, o diálogo e novas conexões.
+                É com essa essência que nasce o Thera Summit, inspirado no conceito de summit: uma
+                reunião de alto nível que reúne especialistas e profissionais em torno de temas
+                relevantes, favorecendo a troca de conhecimento, o diálogo e novas conexões.
               </p>
               <p>
-                Em sua primeira edição, o Thera Summit reúne médicos de diferentes especialidades em um ambiente pensado para compartilhar experiências, ampliar perspectivas e aproximar ciência, inovação e cuidado.
+                Em sua primeira edição, o Thera Summit reúne médicos de diferentes especialidades em
+                um ambiente pensado para compartilhar experiências, ampliar perspectivas e aproximar
+                ciência, inovação e cuidado.
               </p>
               <p>
-                O 1º Thera Summit marca o início de um projeto da Therapeutica Pharmacia, criado com o propósito de transformar conhecimento em novas possibilidades de cuidado. Um encontro que fortalece conexões, estimula novas perspectivas e, a cada edição, constrói caminhos para uma saúde cada vez mais individualizada, integrada e centrada nas necessidades de cada paciente.
+                O 1º Thera Summit marca o início de um projeto da Therapeutica Pharmacia, criado com
+                o propósito de transformar conhecimento em novas possibilidades de cuidado. Um
+                encontro que fortalece conexões, estimula novas perspectivas e, a cada edição,
+                constrói caminhos para uma saúde cada vez mais individualizada, integrada e centrada
+                nas necessidades de cada paciente.
               </p>
             </div>
           </section>
@@ -174,38 +262,38 @@ function Guide() {
           <section id="como-chegar" className="scroll-mt-20">
             <SectionTitle kicker="Localização" title="Como chegar" />
             <div className="space-y-3">
-            <Card>
-              <p className="font-display text-xl text-primary">Todeschini Sorriso</p>
-              <p className="mt-2 text-sm text-muted-foreground">18/08</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Av. Blumenau Sul, 3534 — Bom Jesus, Sorriso — MT,
-                <br />
-                78896-147
-              </p>
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=Todeschini+Sorriso+Av.+Blumenau+Sul+3534+Bom+Jesus+Sorriso+MT"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 block rounded-full bg-primary py-3 text-center text-xs font-medium uppercase tracking-wider text-primary-foreground"
-              >
-                Abrir no mapa
-              </a>
-            </Card>
-            <Card>
-              <p className="font-display text-xl text-primary">Todeschini Sinop</p>
-              <p className="mt-2 text-sm text-muted-foreground">19/08</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Av. das Embaúbas, 2724 - Jardim Maringá, Sinop - MT, 78556-271
-              </p>
-              <a
-                href="https://maps.app.goo.gl/bXJ8QL7PdyyHsoEM8"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 block rounded-full bg-primary py-3 text-center text-xs font-medium uppercase tracking-wider text-primary-foreground"
-              >
-                Abrir no mapa
-              </a>
-            </Card>
+              <Card>
+                <p className="font-display text-xl text-primary">Todeschini Sorriso</p>
+                <p className="mt-2 text-sm text-muted-foreground">18/08</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Av. Blumenau Sul, 3534 — Bom Jesus, Sorriso — MT,
+                  <br />
+                  78896-147
+                </p>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Todeschini+Sorriso+Av.+Blumenau+Sul+3534+Bom+Jesus+Sorriso+MT"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 block rounded-full bg-primary py-3 text-center text-xs font-medium uppercase tracking-wider text-primary-foreground"
+                >
+                  Abrir no mapa
+                </a>
+              </Card>
+              <Card>
+                <p className="font-display text-xl text-primary">Todeschini Sinop</p>
+                <p className="mt-2 text-sm text-muted-foreground">19/08</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Av. das Embaúbas, 2724 - Jardim Maringá, Sinop - MT, 78556-271
+                </p>
+                <a
+                  href="https://maps.app.goo.gl/bXJ8QL7PdyyHsoEM8"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 block rounded-full bg-primary py-3 text-center text-xs font-medium uppercase tracking-wider text-primary-foreground"
+                >
+                  Abrir no mapa
+                </a>
+              </Card>
             </div>
           </section>
 
@@ -246,15 +334,16 @@ function Guide() {
               </p>
               <p>
                 Fundada em 2009, a Biodiversité começou exportando insumos farmacêuticos naturais
-                para o exterior e, através de sua consolidação no mercado internacional, passou a ter
-                acesso a tecnologias inovadoras na Europa e Ásia. Desde então se tornou referência em
-                inovação tecnológica e sustentabilidade de princípios ativos e matérias primas
-                premium, naturais, hipoalergênicas e de alta eficácia.
+                para o exterior e, através de sua consolidação no mercado internacional, passou a
+                ter acesso a tecnologias inovadoras na Europa e Ásia. Desde então se tornou
+                referência em inovação tecnológica e sustentabilidade de princípios ativos e
+                matérias primas premium, naturais, hipoalergênicas e de alta eficácia.
               </p>
               <p>
                 Há mais de dez anos o nosso propósito é pautado em entregar as melhores soluções
-                médicas e nutricionais para todos os pacientes. Levamos saúde, autoestima e bem-estar
-                através do estudo, desenvolvimento, fabricação e distribuição de ativos premium.
+                médicas e nutricionais para todos os pacientes. Levamos saúde, autoestima e
+                bem-estar através do estudo, desenvolvimento, fabricação e distribuição de ativos
+                premium.
               </p>
             </div>
           </section>
@@ -288,18 +377,18 @@ function Guide() {
               </p>
               <p>
                 Mais do que manipular fórmulas, acreditamos na construção de relações. Por isso,
-                buscamos estar próximos dos profissionais de saúde, promovendo troca de conhecimento,
-                atualização e parceria, para que prescritor e farmácia possam caminhar juntos na
-                busca pelas melhores possibilidades de cuidado.
+                buscamos estar próximos dos profissionais de saúde, promovendo troca de
+                conhecimento, atualização e parceria, para que prescritor e farmácia possam caminhar
+                juntos na busca pelas melhores possibilidades de cuidado.
               </p>
               <p>
                 É dessa vontade de evoluir, compartilhar conhecimento e estar cada vez mais próximos
                 que também nasce o Thera Summit.
               </p>
               <p>
-                Seguimos olhando para o futuro com o propósito que nos acompanha desde o início e com
-                a visão de ser referência nacional em manipulação personalizada, sem perder aquilo
-                que faz parte da nossa essência: cuidar de cada pessoa de forma única.
+                Seguimos olhando para o futuro com o propósito que nos acompanha desde o início e
+                com a visão de ser referência nacional em manipulação personalizada, sem perder
+                aquilo que faz parte da nossa essência: cuidar de cada pessoa de forma única.
               </p>
             </div>
           </section>
