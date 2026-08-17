@@ -40,23 +40,47 @@ const agenda = [
   { time: "22h30", title: "Encerramento" },
 ];
 
-function SectionTitle({ kicker, title }: { kicker?: string; title: string }) {
+function SectionTitle({
+  kicker,
+  title,
+  inverted = false,
+}: {
+  kicker?: string;
+  title: string;
+  inverted?: boolean;
+}) {
   return (
     <header className="mb-6 text-center">
       {kicker && (
-        <p className="font-sans text-[0.65rem] uppercase tracking-wider text-accent">{kicker}</p>
+        <p
+          className={`font-sans text-[0.65rem] uppercase tracking-wider ${
+            inverted ? "text-primary-foreground" : "text-accent"
+          }`}
+        >
+          {kicker}
+        </p>
       )}
-      <h2 className="font-display text-3xl font-light text-primary">{title}</h2>
-      <div className="divider-ornament mt-4">
+      <h2 className={`font-display text-3xl font-light ${inverted ? "text-primary-foreground" : "text-primary"}`}>
+        {title}
+      </h2>
+      <div
+        className={`divider-ornament mt-4 ${
+          inverted ? "[--accent:var(--primary-foreground)]" : ""
+        }`}
+      >
         <span className="text-accent">✦</span>
       </div>
     </header>
   );
 }
 
-function Card({ children }: { children: React.ReactNode }) {
+function Card({ children, inverted = false }: { children: React.ReactNode; inverted?: boolean }) {
   return (
-    <div className="rounded-lg border border-border bg-card/70 p-5 shadow-[var(--shadow-soft)]">
+    <div
+      className={`rounded-lg border border-border p-5 shadow-[var(--shadow-soft)] ${
+        inverted ? "bg-background" : "bg-card/70"
+      }`}
+    >
       {children}
     </div>
   );
@@ -213,7 +237,7 @@ function Guide() {
           </button>
         </nav>
 
-        <main className="space-y-14 px-5 py-12">
+        <main className="space-y-14 px-5 pb-0 pt-12">
           <section id="boas-vindas" className="scroll-mt-20 text-justify [text-align-last:center]">
             <SectionTitle kicker="Guia do evento" title="Boas-vindas" />
             <p className="font-display text-xl leading-relaxed text-primary/90">
@@ -259,10 +283,15 @@ function Guide() {
             </ol>
           </section>
 
-          <section id="como-chegar" className="scroll-mt-20">
+          <section
+            id="como-chegar"
+            className="section-transition-card w-screen scroll-mt-20 bg-card"
+            style={{ marginLeft: "calc(50% - 50vw)" }}
+          >
+            <div className="mx-auto max-w-md px-5 py-10">
             <SectionTitle kicker="Localização" title="Como chegar" />
             <div className="space-y-3">
-              <Card>
+              <Card inverted>
                 <p className="font-display text-xl text-primary">Todeschini Sorriso</p>
                 <p className="mt-2 text-sm text-muted-foreground">18/08</p>
                 <p className="mt-2 text-sm text-muted-foreground">
@@ -279,7 +308,7 @@ function Guide() {
                   Abrir no mapa
                 </a>
               </Card>
-              <Card>
+              <Card inverted>
                 <p className="font-display text-xl text-primary">Todeschini Sinop</p>
                 <p className="mt-2 text-sm text-muted-foreground">19/08</p>
                 <p className="mt-2 text-sm text-muted-foreground">
@@ -294,6 +323,7 @@ function Guide() {
                   Abrir no mapa
                 </a>
               </Card>
+            </div>
             </div>
           </section>
 
@@ -323,9 +353,14 @@ function Guide() {
             </Card>
           </section>
 
-          <section id="biodiversite" className="scroll-mt-20 text-justify [text-align-last:center]">
-            <SectionTitle kicker="Marca parceira" title="Sobre a Biodiversité" />
-            <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
+          <section
+            id="biodiversite"
+            className="section-transition-primary w-screen scroll-mt-20 bg-primary text-justify text-primary-foreground [text-align-last:center]"
+            style={{ marginLeft: "calc(50% - 50vw)" }}
+          >
+            <div className="mx-auto max-w-md px-5 py-10">
+            <SectionTitle kicker="Marca parceira" title="Sobre a Biodiversité" inverted />
+            <div className="space-y-4 text-sm leading-relaxed text-primary-foreground">
               <p>
                 A Biodiversité nasceu com a grande missão de trazer ao mercado cosmético mundial
                 ativos premium para formulações manipuladas pautadas em inovação científica,
@@ -345,6 +380,7 @@ function Guide() {
                 bem-estar através do estudo, desenvolvimento, fabricação e distribuição de ativos
                 premium.
               </p>
+            </div>
             </div>
           </section>
 
@@ -393,32 +429,43 @@ function Guide() {
             </div>
           </section>
 
-          <section id="instagram" className="scroll-mt-20 text-justify [text-align-last:center]">
-            <SectionTitle kicker="Continue conosco" title="Nosso Instagram" />
+          <section
+            id="instagram"
+            className="section-transition-primary w-screen scroll-mt-20 bg-primary text-justify text-primary-foreground [text-align-last:center]"
+            style={{ marginLeft: "calc(50% - 50vw)" }}
+          >
+            <div className="mx-auto max-w-md px-5 py-10">
+            <SectionTitle kicker="Continue conosco" title="Nosso Instagram" inverted />
             <div className="text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-primary-foreground">
                 Acompanhe os bastidores e conteúdos do Summit.
               </p>
-              <p className="mt-3 text-sm text-muted-foreground">
+              <p className="mt-3 text-sm text-primary-foreground">
                 Você é parte da nossa história! Tire uma foto e marque a gente na sua publicação.
               </p>
               <a
                 href="https://www.instagram.com/therapeuticamt/"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-block rounded-full border border-accent px-8 py-3 font-display text-lg text-primary"
+                className="mt-5 inline-block rounded-full border border-primary-foreground px-8 py-3 font-display text-lg text-primary-foreground"
               >
                 @therapeuticamt
               </a>
             </div>
+            </div>
           </section>
         </main>
 
-        <footer className="border-t border-border px-5 py-10 text-center">
-          <p className="font-display text-2xl tracking-wider text-primary">THERA SUMMIT</p>
-          <p className="mt-2 text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-            Guia oficial do evento
-          </p>
+        <footer
+          className="w-screen border-t border-primary-foreground/30 bg-primary text-center"
+          style={{ marginLeft: "calc(50% - 50vw)" }}
+        >
+          <div className="mx-auto max-w-md px-5 py-10">
+            <p className="font-display text-2xl tracking-wider text-primary-foreground">THERA SUMMIT</p>
+            <p className="mt-2 text-[0.65rem] uppercase tracking-wider text-primary-foreground">
+              Guia oficial do evento
+            </p>
+          </div>
         </footer>
       </div>
     </div>

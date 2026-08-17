@@ -119,6 +119,55 @@
   }
 }
 
+.section-transition-card,
+.section-transition-primary {
+  isolation: isolate;
+  position: relative;
+}
+
+.section-transition-card::before,
+.section-transition-card::after,
+.section-transition-primary::before,
+.section-transition-primary::after {
+  content: "";
+  height: 0.5rem;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  z-index: 0;
+}
+
+.section-transition-card > div,
+.section-transition-primary > div {
+  position: relative;
+  z-index: 1;
+}
+
+.section-transition-card::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--background), var(--card));
+}
+
+.section-transition-card::after {
+  bottom: 0;
+  background: linear-gradient(to bottom, var(--card), var(--background));
+}
+
+.section-transition-primary::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--background), var(--primary));
+}
+
+.section-transition-primary::after {
+  bottom: 0;
+  background: linear-gradient(to bottom, var(--primary), var(--background));
+}
+
+#instagram.section-transition-primary::after {
+  display: none;
+}
+
 .dark {
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
