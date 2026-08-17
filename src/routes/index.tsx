@@ -62,6 +62,11 @@ function Card({ children }: { children: React.ReactNode }) {
 
 function Guide() {
   const [activeIndex, setActiveIndex] = React.useState(0);
+  const navScrollRef = React.useRef<HTMLUListElement>(null);
+
+  React.useEffect(() => {
+    navScrollRef.current?.scrollTo({ left: 0 });
+  }, []);
 
   React.useEffect(() => {
     const observer = new IntersectionObserver(
@@ -112,7 +117,7 @@ function Guide() {
           <button type="button" onClick={() => goTo(activeIndex - 1)} disabled={activeIndex === 0} aria-label="Seção anterior" className="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/95 text-accent transition-opacity hover:border-accent disabled:opacity-25">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
           </button>
-          <ul className="flex w-max min-w-full snap-x snap-mandatory justify-start gap-2 overflow-x-auto overscroll-x-contain px-14 py-3 touch-pan-x [scrollbar-width:none] md:w-full md:justify-center [&::-webkit-scrollbar]:hidden">
+          <ul ref={navScrollRef} className="flex w-max min-w-full snap-x snap-mandatory justify-start gap-2 overflow-x-auto overscroll-x-contain px-14 py-3 touch-pan-x [scrollbar-width:none] md:w-full md:justify-center [&::-webkit-scrollbar]:hidden">
             {nav.map((item) => (
               <li key={item.id} className="shrink-0 snap-start">
                 <a
