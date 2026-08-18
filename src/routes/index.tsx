@@ -34,10 +34,6 @@ const nav = [
 
 const agenda = [
   { time: "19h00", title: "Welcome Drinks" },
-  { time: "19h45", title: "Abertura oficial" },
-  { time: "20h00", title: "Palestra com Dr. Fabrício Brito" },
-  { time: "21h30", title: "Jantar" },
-  { time: "22h30", title: "Encerramento" },
 ];
 
 function SectionTitle({
@@ -373,23 +369,19 @@ function Guide() {
             />
             <div className="space-y-4 text-sm leading-relaxed text-primary-foreground">
               <p>
-                A Biodiversité nasceu com a grande missão de trazer ao mercado cosmético mundial
-                ativos premium para formulações manipuladas pautadas em inovação científica,
-                tecnologia e respeito ao meio ambiente. Nossos valores são a ética, a ciência e a
-                responsabilidade social e ambiental.
+                Nesta primeira edição do Thera Summit, a Therapeutica conta com a parceria da
+                Biodiversité, empresa brasileira que, desde 2009, constrói sua trajetória pautada em
+                ciência, inovação e tecnologia.
               </p>
               <p>
-                Fundada em 2009, a Biodiversité começou exportando insumos farmacêuticos naturais
-                para o exterior e, através de sua consolidação no mercado internacional, passou a
-                ter acesso a tecnologias inovadoras na Europa e Ásia. Desde então se tornou
-                referência em inovação tecnológica e sustentabilidade de princípios ativos e
-                matérias primas premium, naturais, hipoalergênicas e de alta eficácia.
+                Com atuação no desenvolvimento e fornecimento de matérias-primas premium para o
+                mercado magistral, a Biodiversité conecta pesquisa, tecnologia e conhecimento
+                científico na busca por soluções que acompanhem a evolução do cuidado em saúde.
               </p>
               <p>
-                Há mais de dez anos o nosso propósito é pautado em entregar as melhores soluções
-                médicas e nutricionais para todos os pacientes. Levamos saúde, autoestima e
-                bem-estar através do estudo, desenvolvimento, fabricação e distribuição de ativos
-                premium.
+                A parceria com a Therapeutica nasce da afinidade entre propósitos: valorizar a
+                ciência, incentivar a atualização profissional e ampliar, por meio do conhecimento e
+                da inovação, as possibilidades de um cuidado cada vez mais personalizado.
               </p>
             </div>
             </div>
@@ -421,9 +413,9 @@ function Guide() {
                 Personalizamos cuidados para transformar vidas.
               </p>
               <p>
-                Um propósito sustentado por valores que fazem parte da nossa forma de cuidar e de
-                construir relações: responsabilidade e comprometimento, gratidão, transparência,
-                cuidado e servir, respeito e empatia e sustentabilidade.
+                Um propósito sustentado por valores que fazem parte da nossa forma de cuidar e construir relações: 
+                responsabilidade e comprometimento, gratidão, transparência, cuidado e disposição 
+                para servir, respeito e empatia, além de sustentabilidade.
               </p>
               <p>
                 Mais do que manipular fórmulas, acreditamos na construção de relações. Por isso,
