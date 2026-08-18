@@ -34,6 +34,10 @@ const nav = [
 
 const agenda = [
   { time: "19h00", title: "Welcome Drinks" },
+  { title: "Abertura oficial" },
+  { title: "Palestra com Dr. Fabrício Brito" },
+  { title: "Jantar" },
+  { title: "Encerramento" },
 ];
 
 function SectionTitle({
@@ -271,10 +275,15 @@ function Guide() {
             <SectionTitle title="Programação" />
             <ol className="space-y-3">
               {agenda.map((slot) => (
-                <li key={slot.time}>
+                <li key={slot.title}>
                   <Card>
-                    <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-4">
-                      <span className="shrink-0 font-display text-lg text-accent">{slot.time}</span>
+                    <div className="grid grid-cols-[2.5rem_minmax(0,1fr)] items-baseline gap-4">
+                      <span
+                        aria-hidden={!slot.time}
+                        className={`font-display text-lg text-accent ${slot.time ? "" : "invisible"}`}
+                      >
+                        {slot.time ?? "19h00"}
+                      </span>
                       <div className="min-w-0">
                         <h3 className="text-sm font-medium text-primary">{slot.title}</h3>
                       </div>
