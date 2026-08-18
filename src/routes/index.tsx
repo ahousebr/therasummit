@@ -29,6 +29,7 @@ const nav = [
   { id: "palestrante", label: "Palestrante" },
   { id: "biodiversite", label: "Biodiversité" },
   { id: "therapeutica", label: "Therapeutica" },
+  { id: "todeschini", label: "Todeschini" },
   { id: "instagram", label: "Instagram" },
 ];
 
@@ -38,6 +39,16 @@ const agenda = [
   { title: "Palestra com Dr. Fabrício Brito" },
   { title: "Jantar" },
   { title: "Encerramento" },
+];
+
+// Localizações mantidas para publicação em uma próxima edição do evento.
+const savedLocations = [
+  {
+    name: "Todeschini Sinop",
+    date: "19/08",
+    address: "Av. das Embaúbas, 2724 - Jardim Maringá, Sinop - MT, 78556-271",
+    mapUrl: "https://maps.app.goo.gl/bXJ8QL7PdyyHsoEM8",
+  },
 ];
 
 function SectionTitle({
@@ -63,7 +74,7 @@ function SectionTitle({
         </p>
       )}
       {titleImageSrc ? (
-        <img src={titleImageSrc} alt={title} className="mx-auto mt-1 w-full max-w-72" />
+        <img src={titleImageSrc} alt={title} className="block mx-auto mt-1 w-full max-w-72" />
       ) : (
         <h2 className={`font-display text-3xl font-light ${inverted ? "text-primary-foreground" : "text-primary"}`}>
           {title}
@@ -319,21 +330,6 @@ function Guide() {
                   Abrir no mapa
                 </a>
               </Card>
-              <Card inverted>
-                <p className="font-display text-xl text-primary">Todeschini Sinop</p>
-                <p className="mt-2 text-sm text-muted-foreground">19/08</p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Av. das Embaúbas, 2724 - Jardim Maringá, Sinop - MT, 78556-271
-                </p>
-                <a
-                  href="https://maps.app.goo.gl/bXJ8QL7PdyyHsoEM8"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-6 block rounded-full bg-primary py-3 text-center text-xs font-medium uppercase tracking-wider text-primary-foreground"
-                >
-                  Abrir no mapa
-                </a>
-              </Card>
             </div>
             </div>
           </section>
@@ -441,6 +437,42 @@ function Guide() {
                 com a visão de ser referência nacional em manipulação personalizada, sem perder
                 aquilo que faz parte da nossa essência: cuidar de cada pessoa de forma única.
               </p>
+            </div>
+          </section>
+
+          <section
+            id="todeschini"
+            className="![margin-block-end:0] w-screen scroll-mt-20 bg-primary text-justify text-primary-foreground [text-align-last:center]"
+            style={{ marginLeft: "calc(50% - 50vw)" }}
+          >
+            <div className="mx-auto max-w-md px-5 py-10">
+              <SectionTitle
+                kicker="Parceira do Thera Summit"
+                title="Todeschini"
+                titleImageSrc={`${import.meta.env.BASE_URL}todeschini.png`}
+                inverted
+              />
+              <div className="space-y-4 text-sm leading-relaxed text-primary-foreground">
+              <p>
+                Nesta primeira edição do Thera Summit, a Therapeutica conta com a parceria da
+                Todeschini, uma das mais tradicionais marcas brasileiras de móveis planejados, que há
+                décadas constrói sua trajetória unindo design, tecnologia, inovação e excelência.
+              </p>
+              <p>
+                Com soluções desenvolvidas para diferentes formas de viver e trabalhar, a Todeschini
+                transforma espaços por meio de projetos personalizados, nos quais estética,
+                funcionalidade e cuidado com cada detalhe caminham juntos.
+              </p>
+              <p>
+                A parceria com a Therapeutica nasce da conexão entre propósitos: acreditar que
+                ambientes também fazem parte da experiência de cuidado, contribuindo para espaços mais
+                acolhedores, funcionais e alinhados às necessidades de cada pessoa.
+              </p>
+              <p>
+                Uma união entre design, conhecimento e cuidado, que encontra no Thera Summit um espaço
+                para novas experiências, conexões e possibilidades.
+              </p>
+              </div>
             </div>
           </section>
 
