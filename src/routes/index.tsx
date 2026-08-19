@@ -41,7 +41,6 @@ const agenda = [
   { title: "Encerramento" },
 ];
 
-// Localizações mantidas para publicação em uma próxima edição do evento.
 const savedLocations = [
   {
     name: "Todeschini Sinop",
@@ -312,25 +311,23 @@ function Guide() {
           >
             <div className="mx-auto max-w-md px-5 py-10">
             <SectionTitle kicker="Localização" title="Como chegar" />
-            <div className="space-y-3">
-              <Card inverted>
-                <p className="font-display text-xl text-primary">Todeschini Sorriso</p>
-                <p className="mt-2 text-sm text-muted-foreground">18/08</p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Av. Blumenau Sul, 3534 — Bom Jesus, Sorriso — MT,
-                  <br />
-                  78896-147
-                </p>
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=Todeschini+Sorriso+Av.+Blumenau+Sul+3534+Bom+Jesus+Sorriso+MT"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-6 block rounded-full bg-primary py-3 text-center text-xs font-medium uppercase tracking-wider text-primary-foreground"
-                >
-                  Abrir no mapa
-                </a>
-              </Card>
-            </div>
+              <div className="space-y-3">
+                {savedLocations.map((location) => (
+                  <Card key={location.name} inverted>
+                    <p className="font-display text-xl text-primary">{location.name}</p>
+                    <p className="mt-2 text-sm text-muted-foreground">{location.date}</p>
+                    <p className="mt-2 text-sm text-muted-foreground">{location.address}</p>
+                    <a
+                      href={location.mapUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-6 block rounded-full bg-primary py-3 text-center text-xs font-medium uppercase tracking-wider text-primary-foreground"
+                    >
+                      Abrir no mapa
+                    </a>
+                  </Card>
+                ))}
+              </div>
             </div>
           </section>
 
